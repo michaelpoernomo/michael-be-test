@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * failed API request attempt will be redirected to here
+ */
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('login');
 
 Route::get('/version', function () {
     phpinfo();

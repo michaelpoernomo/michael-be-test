@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KendaraanController;
 
 /*
@@ -18,8 +19,10 @@ use App\Http\Controllers\KendaraanController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/get_token', [AuthController::class, 'getToken']);
+Route::post('/invalidate_token', [AuthController::class, 'invalidateToken']);
 
-Route::group([], function () {
+Route::middleware('auth:api')->group(function () {
     Route::get('/kendaraan/terjual', [KendaraanController::class, 'terjual']);
     Route::get('/kendaraan/tersedia', [KendaraanController::class, 'tersedia']);
     Route::get('/penjualan/{jenis}', [KendaraanController::class, 'penjualan']);

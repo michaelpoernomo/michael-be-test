@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\Kendaraan;
 use App\Enums\KendaraanJenis;
 use App\Enums\KendaraanStatus;
@@ -59,5 +60,11 @@ class DatabaseSeeder extends Seeder
             ],
         ];
         Kendaraan::insert($data);
+
+        User::insert([
+            'name'      => 'admin',
+            'email'     => 'admin@mail.com',
+            'password'  => bcrypt('admin')
+        ]);
     }
 }
