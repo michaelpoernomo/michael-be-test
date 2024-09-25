@@ -6,5 +6,17 @@ use App\Models\Kendaraan;
 
 class Mobil extends Kendaraan
 {
-    protected $fillable = ['tahun_keluaran', 'warna', 'harga', 'mesin', 'kapasitas_penumpang', 'tipe'];
+    protected $fillable = [
+        'tipe', 'tahun_keluaran', 'warna', 'harga', 'status',
+        'mesin', 'kapasitas_penumpang', 'tipe'
+    ];
+
+    public function getValidator(): array
+    {
+        return [
+            'mesin' => 'required|string',
+            'kapasitas_penumpang' => 'required|int',
+            'tipe' => 'required|string',
+        ];
+    }
 }

@@ -20,6 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group([], function () {
-    Route::get('/kendaraan', [KendaraanController::class, 'index']);
-    Route::post('/kendaraan', [KendaraanController::class, 'store']);
+    Route::get('/kendaraan/terjual', [KendaraanController::class, 'terjual']);
+    Route::get('/kendaraan/tersedia', [KendaraanController::class, 'tersedia']);
+    Route::get('/penjualan/{jenis}', [KendaraanController::class, 'penjualan']);
+    Route::post('/kendaraan/tambah', [KendaraanController::class, 'tambah']);
+    Route::delete('/kendaraan/hapus/semua', [KendaraanController::class, 'hapusSemua']);
 });

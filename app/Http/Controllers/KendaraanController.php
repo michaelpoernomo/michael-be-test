@@ -3,30 +3,54 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Kendaraan;
+use App\Services\KendaraanService;
 
 class KendaraanController extends Controller
 {
-    //
-    public function index()
+    protected $kendaraanService;
+
+    public function __construct(KendaraanService $kendaraanService)
     {
-        return response()->json(Kendaraan::all(), 200);
+        $this->kendaraanService = $kendaraanService;
     }
 
-    public function store(Request $request)
+    public function terjual()
     {
-        /**
-         * test validasi
-         * TODO: cek ulang
-         */
-        $data = $request->validate([
-            'tahun_keluaran' => 'required',
-            'warna' => 'required',
-            'harga' => 'required',
+        return response()->json($this->kendaraanService->getAllSold(), 200);
+    }
+
+    public function tersedia()
+    {
+        return response()->json($this->kendaraanService->getAllInStock(), 200);
+    }
+
+    public function penjualan($jenis)
+    {
+        return response()->json($this->kendaraanService->getSoldByJenis($jenis), 200);
+    }
+    
+    public function tambah(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'jenis' => 'required',
         ]);
-
-        $kendaraan = Kendaraan::create($data);
-
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors());
+        }
+        $kendaraan = $this->kendaraanService->create($request['jenis'], $request->all());
         return response()->json($kendaraan, 201);
     }
+
+    public function hapusSemua() 
+    {
+        $this->kendaraanService->deleteAll();
+        return response()->json(['message' => 'All vehicles deleted successfully.'], 202);
+    }
+
+    public function laporan()
+    {
+        $laporan = $this->kendaraanService->laporanPenjualan();
+        return response()->json($laporan, 200);
+    }
 }
+
