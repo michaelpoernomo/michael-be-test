@@ -57,16 +57,13 @@ Version detail page: http://localhost:8000/version
 
     -   **Endpoint:** `POST /api/get_token`
     -   **Request Body:**
-
         ```
         {
            "email": required|string,
            "password": required|string
         }
         ```
-
     -   **Success Response:**
-
         -   **Code:** 200
             ```
             {
@@ -75,12 +72,24 @@ Version detail page: http://localhost:8000/version
                "token": string
             }
             ```
-
     -   **Failed Response:**
         -   **Code:** 401 Unauthorized
             ```
             {
                 "success": false,
+                "message": string,
+            }
+            ```
+
+-   **Invalidate Token**
+    -   **Endpoint:** `POST /api/invalidate_token`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Success Response:**
+        -   **Code:** 200
+            ```
+            {
+               "success": true,
                 "message": string,
             }
             ```
