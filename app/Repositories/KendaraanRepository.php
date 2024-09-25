@@ -39,9 +39,14 @@ class KendaraanRepository implements KendaraanRepositoryInterface
         return $this->kendaraan->where('status', $status)->where('jenis', $jenis)->get();
     }
 
-    public function create(array $data): Kendaraan
+    public function createMobil(array $data): Kendaraan
     {
-        return $this->kendaraan->create($data);
+        return $this->mobil->create($data);
+    }
+
+    public function createMotor(array $data): Kendaraan
+    {
+        return $this->motor->create($data);
     }
 
     public function deleteAll(): void

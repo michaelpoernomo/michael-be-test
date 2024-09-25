@@ -43,8 +43,14 @@ class KendaraanService
         $validator = \Validator::make($data, $this->kendaraanRepository->getValidatorByJenis($jenis));
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->toJson());
+        }        
+        if ($jenis === KendaraanJenis::MOBIL->value) {
+            return $this->kendaraanRepository->createMobil($data);
         }
-        return $this->kendaraanRepository->create($data);
+        if ($jenis === KendaraanJenis::MOTOR->value) {
+            return $this->kendaraanRepository->createMotor($data); 
+        }
+        throw new \InvalidArgumentException("No appropriate function found for jenis: $jenis");
     }
 
     public function deleteAll(): void

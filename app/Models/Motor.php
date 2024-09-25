@@ -7,7 +7,7 @@ use App\Models\Kendaraan;
 class Motor extends Kendaraan
 {
     protected $fillable = [
-        'tipe', 'tahun_keluaran', 'warna', 'harga', 'status',
+        'jenis', 'tahun_keluaran', 'warna', 'harga', 'status',
         'mesin', 'tipe_suspensi', 'tipe_transmisi'
     ];
 

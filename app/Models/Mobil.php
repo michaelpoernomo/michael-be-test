@@ -7,7 +7,7 @@ use App\Models\Kendaraan;
 class Mobil extends Kendaraan
 {
     protected $fillable = [
-        'tipe', 'tahun_keluaran', 'warna', 'harga', 'status',
+        'jenis', 'tahun_keluaran', 'warna', 'harga', 'status',
         'mesin', 'kapasitas_penumpang', 'tipe'
     ];
 

@@ -10,6 +10,7 @@ interface KendaraanRepositoryInterface
     public function all();
     public function getByStatus(KendaraanStatus $status);
     public function getByStatusAndJenis(KendaraanStatus $status, KendaraanJenis $jenis);
-    public function create(array $data);
+    public function createMobil(array $data);
+    public function createMotor(array $data);
     public function deleteAll();
 }
