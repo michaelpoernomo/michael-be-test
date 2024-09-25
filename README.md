@@ -1,64 +1,239 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Michael BE Test
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
 
-## About Laravel
+-   [Requirements](#Requirements)
+-   [Installation](#Installation)
+-   [GettingStarted](#GettingStarted)
+-   [Endpoints](#Endpoints)
+-   [Testing](#Testing)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   Laravel 8
+-   PHP8
+-   Mongodb 4.2
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+1. Clone the repository:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - git clone https://github.com/michaelpoernomo/michael-be-test.git
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Install dependencies:
 
-## Laravel Sponsors
+    - composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. Copy the env file
 
-### Premium Partners
+4. Generate the application key:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    - php artisan key:generate
 
-## Contributing
+5. Set up your database:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - Update the .env and .env.testing file
 
-## Code of Conduct
+6. Run seed the database:
+    - php artisan db:seed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## GettingStarted
 
-## Security Vulnerabilities
+To start the local development server, run:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+php artisan serve
+```
 
-## License
+Default laravel page will be accessible at http://localhost:8000.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Version detail page: http://localhost:8000/version
+
+## Endpoints
+
+### Authentication
+
+-   **Get Token**
+
+    -   **Endpoint:** `POST /api/get_token`
+    -   **Request Body:**
+
+        ```
+        {
+           "email": required|string,
+           "password": required|string
+        }
+        ```
+
+    -   **Success Response:**
+
+        -   **Code:** 200
+            ```
+            {
+               "success": true,
+               "user_id": string,
+               "token": string
+            }
+            ```
+
+    -   **Failed Response:**
+        -   **Code:** 401 Unauthorized
+            ```
+            {
+                "success": false,
+                "message": string,
+            }
+            ```
+
+### Kendaraan Endpoints
+
+-   **Get All Kendaraan Tersedia**
+
+    -   **Description:** Lihat stok kendaraan
+    -   **Endpoint:** `GET /api/kendaraan/tersedia`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Success Response:**
+        -   **Code:** 200
+        -   **Body:** [Kendaraan Collection](#KendaraanCollection)
+
+-   **Get All Kendaraan Terjual**
+
+    -   **Description:** Penjualan kendaraan
+    -   **Endpoint:** `GET /api/kendaraan/terjual`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Success Response:**
+        -   **Code:** 200
+        -   **Body:** [Kendaraan Collection](#KendaraanCollection)
+
+-   **Get Per Kendaraan Terjual**
+
+    -   **Description:** Laporan penjualan per kendaraan
+    -   **Endpoint:** `GET /api/penjualan/{jenis_kendaraan}`
+        -   **jenis_kendaraan:** `mobil|motor`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Success Response:**
+        -   **Code:** 200
+        -   **Body:** [Mobil Collection](#MobilCollection) | [Motor Collection](#MotorCollection)
+
+-   **Add Kendaraan**
+
+    -   **Description:** Menambahkan kendaraan
+    -   **Endpoint:** `POST /api/kendaraan/tambah`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Params:** [Mobil Fields](#MobilFields) | [Motor Fields](#MotorFields)
+    -   **Success Response:**
+        -   **Code:** 201
+        -   **Body:** Object of [Mobil Collection](#MobilCollection) | [Motor Collection](#MotorCollection)
+
+-   **Delete All Kendaraan**
+    -   **Description:** Menghapus semua data kendaraan
+    -   **Endpoint:** `POST /api/kendaraan/hapus/semua`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Success Response:**
+        -   **Code:** 202
+
+### Kendaraan Fields
+
+-   #### MobilFields
+
+    ```
+    jenis: required|string|in:mobil|motor
+    tahun_keluaran: required|int
+    warna: required|string
+    harga: required|int
+    status: required|string|in:sold|inStock
+    mesin: required|string
+    kapasitas_penumpang: required|int
+    tipe: required|string
+    ```
+
+-   #### MotorFields
+    ```
+    jenis: required|string|in:mobil|motor
+    tahun_keluaran: required|int
+    warna: required|string
+    harga: required|int
+    status: required|string|in:sold|inStock
+    mesin: required|string
+    tipe_suspensi: required|string
+    tipe_transmisi: required|string
+    ```
+
+### Kendaraan Response
+
+-   #### MobilCollection
+
+    ```
+    [
+        {
+            "_id": "66f4472b16c43bd56a078b52",
+            "jenis": "mobil",
+            "tahun_keluaran": 2024,
+            "warna": "hitam",
+            "harga": 20000,
+            "status": "sold",
+            "mesin": "mesin 1",
+            "kapasitas_penumpang": 6,
+            "tipe": "tipe mobil 1"
+        },
+    ]
+    ```
+
+-   #### MotorCollection
+
+    ```
+    [
+        {
+            "_id": "66f4472b16c43bd56a078b54",
+            "jenis": "motor",
+            "tahun_keluaran": 1998,
+            "warna": "hijau",
+            "harga": 10000,
+            "status": "sold",
+            "mesin": "mesin 3",
+            "tipe_suspensi": "suspensi motor 1",
+            "tipe_transmisi": "suspensi motor 1"
+        },
+    ]
+    ```
+
+-   #### KendaraanCollection
+    ```
+    [
+        {
+            "_id": "66f4472b16c43bd56a078b53",
+            "jenis": "mobil",
+            "tahun_keluaran": 2022,
+            "warna": "putih",
+            "harga": 15000,
+            "status": "inStock",
+            "mesin": "mesin 2",
+            "kapasitas_penumpang": 4,
+            "tipe": "tipe mobil 2"
+        },
+        {
+            "_id": "66f447605ec1b512800ec995",
+            "jenis": "motor",
+            "tahun_keluaran": 1995,
+            "warna": "kuning",
+            "harga": 5000,
+            "status": "inStock",
+            "mesin": "mesin 4",
+            "tipe_suspensi": "suspensi motor 2",
+            "tipe_transmisi": "suspensi motor 2"
+        }
+    ]
+    ```
+
+## Testing
+
+To run the tests, use the following command:
+
+```
+php artisan test
+```

@@ -30,7 +30,7 @@ class AuthController extends Controller
         // success attempt
         return response()->json([
             'success' => true,
-            'user'    => auth()->guard('api')->user(),    
+            'user_id'    => auth()->guard('api')->user()->_id,    
             'token'   => $token   
         ], 200);
     }
