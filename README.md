@@ -114,7 +114,7 @@ Version detail page: http://localhost:8000/version
 
 -   **Get All Kendaraan Terjual**
 
-    -   **Description:** Penjualan kendaraan
+    -   **Description:** Lihat penjualan kendaraan
     -   **Endpoint:** `GET /api/kendaraan/terjual`
     -   **Header:**
         -   **Authorization:** `Bearer {token}`
@@ -140,6 +140,20 @@ Version detail page: http://localhost:8000/version
     -   **Header:**
         -   **Authorization:** `Bearer {token}`
     -   **Params:** [Mobil Fields](#MobilFields) | [Motor Fields](#MotorFields)
+    -   **Success Response:**
+        -   **Code:** 201
+        -   **Body:** Object of [Mobil Collection](#MobilCollection) | [Motor Collection](#MotorCollection)
+
+-   **Jual Kendaraan**
+
+    -   **Description:** Penjualan kendaraan
+    -   **Endpoint:** `POST /api/kendaraan/jual`
+    -   **Header:**
+        -   **Authorization:** `Bearer {token}`
+    -   **Params:**
+        ```
+        id: required|string
+        ```
     -   **Success Response:**
         -   **Code:** 201
         -   **Body:** Object of [Mobil Collection](#MobilCollection) | [Motor Collection](#MotorCollection)

@@ -49,6 +49,11 @@ class KendaraanRepository implements KendaraanRepositoryInterface
         return $this->motor->create($data);
     }
 
+    public function sell(string $id): Kendaraan
+    {
+        return tap($this->kendaraan->findOrFail($id))->update(['status' => 'sold']);
+    }
+
     public function deleteAll(): void
     {
         $this->kendaraan->truncate();

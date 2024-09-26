@@ -27,5 +27,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/kendaraan/tersedia', [KendaraanController::class, 'tersedia']);
     Route::get('/penjualan/{jenis}', [KendaraanController::class, 'penjualan']);
     Route::post('/kendaraan/tambah', [KendaraanController::class, 'tambah']);
+    Route::post('/kendaraan/jual', [KendaraanController::class, 'jual']);
     Route::delete('/kendaraan/hapus/semua', [KendaraanController::class, 'hapusSemua']);
 });

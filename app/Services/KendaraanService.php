@@ -53,6 +53,11 @@ class KendaraanService
         throw new \InvalidArgumentException("No appropriate function found for jenis: $jenis");
     }
 
+    public function sell(string $id): Kendaraan
+    {
+        return $this->kendaraanRepository->sell($id);
+    }
+
     public function deleteAll(): void
     {
         $this->kendaraanRepository->deleteAll();

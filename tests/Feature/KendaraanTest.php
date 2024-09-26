@@ -44,6 +44,16 @@ class KendaraanTest extends TestCase
             'tipe_suspensi' => 'suspensi motor 1',
             'tipe_transmisi' => 'suspensi motor 1',
         ],
+        [
+            'jenis' => KendaraanJenis::MOBIL->value,
+            'tahun_keluaran' => 2022,
+            'warna' => 'putih',
+            'harga' => 15000,
+            'status' => KendaraanStatus::TERJUAL->value,
+            'mesin' => 'mesin 2',
+            'kapasitas_penumpang' => 4,
+            'tipe' => 'tipe mobil 2',
+        ],
     ];
 
     protected function getToken(): string
@@ -56,7 +66,7 @@ class KendaraanTest extends TestCase
         return $response->json('token');
     }
 
-    protected function createKendaraan(string $token, array $test_data): void
+    protected function createKendaraan(string $token, array $test_data): string
     {
         // create data
         $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
@@ -65,6 +75,7 @@ class KendaraanTest extends TestCase
                 ->assertJsonStructure([
                     '_id'
                 ]);
+        return $response->json('_id');
     }
 
     protected function test_terjual(string $jenis, array $test_data)
@@ -105,6 +116,18 @@ class KendaraanTest extends TestCase
                         ->getJson('/api/kendaraan/tersedia');
         $response->assertStatus(200)
                 ->assertJsonFragment($this->test_data[1]);
+    }
+    
+    public function test_jual_kendaraan_data()
+    {
+        // get token
+        $token = $this->getToken();
+        $id = $this->createKendaraan($token, $this->test_data[1]);
+        
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+                        ->postJson('/api/kendaraan/jual', ['id'=>$id]);
+        $response->assertStatus(201)
+                ->assertJsonFragment($this->test_data[3]);
     }
     
 }
