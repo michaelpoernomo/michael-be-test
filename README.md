@@ -63,6 +63,12 @@ Version detail page: http://localhost:8000/version
            "password": required|string
         }
         ```
+    -   **Default:**
+        ```
+        curl --location '127.0.0.1:8000/api/get_token' \
+        --form 'email="admin@mail.com"' \
+        --form 'password="admin"'
+        ```
     -   **Success Response:**
         -   **Code:** 200
             ```
